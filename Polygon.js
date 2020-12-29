@@ -1,41 +1,21 @@
 class Polygon{
-    constructor(bodyA, pointB){
+    constructor(x, y, width, height) {
         var options = {
-            bodyA: bodyA,
-            pointB: pointB,
-            stiffness: 0.04,
-            length: 10
+            isStatic: false,
+            restitution: 0.1,
+            density:1
         }
-        this.pointB = pointB
-        World.add(world, this.polygon);
-        this.polygon = loadImage("polygon.png");
+
+        this.body = Bodies.rectangle(x, y, width, height, options);
+        this.width = width;
+        this.height = height;
+        World.add(world, this.body);
+        this.image=loadImage("polygon.png");
     }
 
-    fly(){
-        this.polygon.bodyA = null;
+    display() {
+        var pos = this.body.position;
+        imageMode(CENTER);
+        image(this.image,pos.x,pos.y,this.width,this.height);
     }
-
-    display(){
-        image(this.polygon,170,20);
-
-        if(this.polygon.bodyA){
-            var pointA = this.polygon.bodyA.position;
-            var pointB = this.pointB;
-            push();
-            strokeWeight(4);
-
-            if (pointA.x<190) {
-                line(pointA.x-20, pointA.y, pointB.x+30, pointB.y);
-                line(pointA.x-20, pointA.y, pointB.x-20, pointB.y);
-                image(this.polygon, pointA.x-25, pointA.y-10, 7, 20);
-            } else {
-                line(pointA.x+20, pointA.y, pointB.x+30, pointB.y);
-                line(pointA.x+20, pointA.y, pointB.x-20, pointB.y);
-                image(this.polygon, pointA.x+20, pointA.y-10, 7, 20);
-            }
-
-            pop();
-        }
-    }
-    
 }
